@@ -220,7 +220,7 @@ function get_hostname -d "Set current hostname to prompt variable $HOSTNAME_PROM
 end
 
 function prompt_dir -d "Display the current directory"
-  prompt_segment $color_dir_bg $color_dir_str (prompt_pwd)
+  prompt_segment $color_dir_bg $color_dir_str (prompt_pwd --dir-length=10)
 end
 
 
@@ -326,8 +326,17 @@ end
 # Apply theme
 # ===========================
 
+# character to use as prompt prefix.
+# ┏   ╔
+# ┗━  ╚═
+#    ⨠
+
+set PROMPT_PREFIX "┏"
+set PROMPT_END \n┗━\$
+
 function fish_prompt
   set -g RETVAL $status
+  echo -n "$PROMPT_PREFIX"
   prompt_status
   prompt_user
   prompt_dir
@@ -342,4 +351,5 @@ function fish_prompt
     end
   end
   prompt_finish
+  echo -n "$PROMPT_END "
 end
